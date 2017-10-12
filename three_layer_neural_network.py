@@ -45,13 +45,6 @@ def plot_decision_boundary(pred_func, X, y):
 	plt.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.Spectral)
 	plt.show()
 
-
-########################################################################################################################
-########################################################################################################################
-# YOUR ASSSIGMENT STARTS HERE
-# FOLLOW THE INSTRUCTION BELOW TO BUILD AND TRAIN A 3-LAYER NEURAL NETWORK
-########################################################################################################################
-########################################################################################################################
 class NeuralNetwork(object):
 	"""
 	This class builds and trains a neural network
@@ -86,9 +79,6 @@ class NeuralNetwork(object):
 		:return: activations
 		'''
 
-		# YOU IMPLMENT YOUR actFun HERE
-		# print "actFun function debug--the size of z input is: ", np.shape(z)
-
 		type = type.lower()
 		if type == 'tanh':
 			activation = np.tanh(z)
@@ -109,7 +99,6 @@ class NeuralNetwork(object):
 		:return: the derivatives of the activation functions wrt the net input
 		'''
 
-		# YOU IMPLEMENT YOUR diff_actFun HERE
 		type = type.lower()
 		if type == 'tanh':
 			der_activation = 1.0 - (np.tanh(z))**2
@@ -130,8 +119,6 @@ class NeuralNetwork(object):
 		:param actFun: activation function
 		:return:
 		'''
-
-		# YOU IMPLEMENT YOUR feedforward HERE
 		# print "feedforward funciton debug -- size of w1 is: ", np.shape(self.W1)
 		# print "feedforward funciton debug -- size of X is: ", np.shape(X)
 		# print "feedforward funciton debug -- size of b1 is: ", np.shape(self.b1)
@@ -154,7 +141,6 @@ class NeuralNetwork(object):
 		self.feedforward(X, lambda x: self.actFun(x, type=self.actFun_type))
 		# Calculating the loss
 
-		# YOU IMPLEMENT YOUR CALCULATION OF THE LOSS HERE
 		data_loss = -1.0 * sum(np.log(self.probs[np.arange(num_examples),y]))
 		# Add regulatization term to loss (optional)
 		data_loss += self.reg_lambda / 2 * (np.sum(np.square(self.W1)) + np.sum(np.square(self.W2)))
@@ -177,7 +163,6 @@ class NeuralNetwork(object):
 		:return: dL/dW1, dL/b1, dL/dW2, dL/db2
 		'''
 
-		# IMPLEMENT YOUR BACKPROP HERE
 		num_examples = len(X)
 		delta3 = self.probs
 		delta3[range(num_examples), y] -= 1
@@ -186,10 +171,6 @@ class NeuralNetwork(object):
 		delta2 = self.diff_actFun(self.z1, self.actFun_type) * delta3.dot(self.W2.T)
 		dW1 = X.T.dot(delta2)
 		db1 = np.sum(delta2, axis = 0)
-		# dW2 = dL/dW2
-		# db2 = dL/db2
-		# dW1 = dL/dW1
-		# db1 = dL/db1
 		# print "backprop function debug--the size of diffact input is: ", np.shape(self.diff_actFun(self.z1, self.actFun_type))
 		# print "backprop function debug--the size of delta3 input is: ", np.shape(delta3)
 		# print "backprop function debug--the size of delta2 input is: ", np.shape(delta2)
@@ -224,7 +205,6 @@ class NeuralNetwork(object):
 			self.b2 += -epsilon * db2
 
 			# Optionally print the loss.
-			# This is expensive because it uses the whole dataset, so we don't want to do it too often.
 			if print_loss and i % 1000 == 0:
 				print("Loss after iteration %i: %f" % (i, self.calculate_loss(X, y)))
 
@@ -290,8 +270,6 @@ class DeepNeuralNetwork(NeuralNetwork):
 		num_examples = len(X)
 		self.feedforward(X, lambda x: self.actFun(x, type=self.actFun_type))
 		# Calculating the loss
-
-		# YOU IMPLEMENT YOUR CALCULATION OF THE LOSS HERE
 		data_loss = -1.0 * sum(np.log(self.probs[np.arange(num_examples),y]))
 
 		# Add regulatization term to loss (optional)
@@ -349,9 +327,7 @@ class DeepNeuralNetwork(NeuralNetwork):
 			for j in range(len(self.layers)):
 				self.layers[j].W += -epsilon * dW[j]
 				self.layers[j].b += -epsilon * db[j]
-			# Optionally print the loss.
-			# This is expensive because it uses the whole dataset, so we don't want to do it too often.
-			
+			# Optionally print the loss.	
 			if print_loss and i % 1000 == 0:
 				print("Loss after iteration %i: %f" % (i, self.calculate_loss(X, y)))
 				loss_vec.append(self.calculate_loss(X, y))
