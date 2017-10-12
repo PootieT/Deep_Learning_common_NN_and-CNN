@@ -1,4 +1,4 @@
-__author__ = 'tan_nguyen'
+__author__ = 'peter_tang'
 import numpy as np
 from sklearn import datasets, linear_model
 import matplotlib.pyplot as plt
