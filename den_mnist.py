@@ -1,4 +1,4 @@
-__author__ = 'tan_nguyen'
+__author__ = 'peter_tang'
 
 import os
 import time
@@ -21,8 +21,6 @@ def weight_variable(shape):
     Cout: the number of filters
     :return: a tensor variable for weights with initial values
     '''
-
-    # IMPLEMENT YOUR WEIGHT_VARIABLE HERE
     initial = tf.truncated_normal(shape, stddev=0.1)
     return tf.Variable(initial)
 
@@ -33,8 +31,7 @@ def bias_variable(shape):
     Cout: the number of filters
     :return: a tensor variable for biases with initial values
     '''
-
-    # IMPLEMENT YOUR BIAS_VARIABLE HERE
+    
     initial = tf.constant(0.1, shape=shape)
     return tf.Variable(initial)
 
@@ -54,7 +51,6 @@ def conv2d(x, W):
     :return: a tensor of features extracted by the filters, a.k.a. the results after convolution
     '''
 
-    # IMPLEMENT YOUR CONV2D HERE
     h_conv = tf.nn.conv2d(x, W, strides=[1,1,1,1], padding='SAME')
     return h_conv
 
@@ -65,7 +61,6 @@ def max_pool_2x2(x):
     :return: the results of maxpooling (max-marginalized + downsampling)
     '''
 
-    # IMPLEMENT YOUR MAX_POOL_2X2 HERE
     h_max = tf.nn.max_pool(x, ksize=[1,2,2,1], strides=[1,2,2,1], padding='SAME')
     return h_max
 
@@ -85,19 +80,12 @@ def main():
     # Specify training parameters
     result_dir = './results/' # directory where the results from the training are saved
     max_step = 5500 # the maximum iterations. After max_step iterations, the training will stop no matter what
-
     start_time = time.time() # start timing
 
-    # FILL IN THE CODE BELOW TO BUILD YOUR NETWORK
 
     # placeholders for input data and input labeles
     x = tf.placeholder(tf.float32, shape = [None, 784])
     y_ =tf.placeholder(tf.float32, shape = [None, 10])
-
-    # # initialize weight and bias variables
-    # W = tf.Variable(tf.zeros([784,10]))
-    # b = tf.variable(tf.zeros([10])
-    # sess.run(tf.global_variable_initializer())
 
     # reshape the input image
     x_image = tf.reshape(x, [-1, 28, 28, 1]) # why -1 for 1st dimention
@@ -149,8 +137,6 @@ def main():
     variable_summaries(W_fc2, 'W_fc2')
     variable_summaries(b_fc2, 'b_fc2')
     variable_summaries(y_conv, 'y_conv')
-
-    # FILL IN THE FOLLOWING CODE TO SET UP THE TRAINING
 
     # setup training
     cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y_conv))
